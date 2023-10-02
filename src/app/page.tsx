@@ -1,9 +1,13 @@
-import styles from '@/app/page.module.css';
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main>
-      Hello, Next.js!
-    </main>
+    <>
+      <header>
+        <h1>Read <Link href="/posts/first-post">this page!</Link></h1>
+      </header>
+      <main>
+      </main>
+    </>
   )
 }

@@ -1,3 +1,15 @@
+:root {
+  --theme-bgcolor: #ffffff;
+  --theme-color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --theme-bgcolor: #000000;
+    --theme-color: #ffffff;
+  }
+}
+
 html {
   font-size: 62.5%;
 }
@@ -6,6 +18,8 @@ body {
   margin: 0;
   padding: 0;
   border: 0;
+  background-color: var(--theme-bgcolor);
+  color: var(--theme-color);
 }
 
 a {
