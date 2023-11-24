@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 필터 및 360도 이미지 프로젝트
 
-## Getting Started
+상태관리를 이용한 필터 적용과 360도 돌릴 수 있는 이미지를 만들어 보기위한 프로젝트
 
-First, run the development server:
+
+## tailwindcss 오류 발생
+
+이 경고는 Tailwind CSS가 소스 파일에서 유틸리티 클래스를 찾지 못했다는 것을 의미합니다.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+warn - No utility classes were detected in your source files. If this is unexpected, double-check the `content` option in your Tailwind CSS configuration.
+warn - https://tailwindcss.com/docs/content-configuration
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 원인
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+해당 에러는 `tailwind.config.{js, ts}`에서 **content** 구문을 인식하지 못해서 나오는 에러라고 하여 참조한 주소에서 해결방법을 찾아서 적용해 보았습니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- `tailwind.config.ts`를 `tailwind.config.js`로 변경 
+  - 똑같은 경고창 발생
+- **content** 구문에 `{js,ts}` 괄호를 적용하지말고 개별 `.js`, `.ts`를 적용하기
+  - 똑같은 경고창 발생
 
-## Learn More
+### 해결
 
-To learn more about Next.js, take a look at the following resources:
+하지만 동일한 경고창이 계속 발생하여 생각보는 중 문구 중 아래가 보여서 소스파일을 확인해보니
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+`No utility classes were detected in your source files.`
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+아직 코드상에서 `tailwind`를 사용하지 않았는 것을 확인하고 `div` 태그에 기본적으로 `className`에 `tailwind` 구문을 작성해보고 실행을 해보니 경고가 사라졌습니다.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+> 찾아본 사이트: [경고문 stackoverflow 문제](https://stackoverflow.com/questions/71070781/tailwind-css-classes-is-not-working-in-my-project)
