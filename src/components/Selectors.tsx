@@ -15,16 +15,16 @@ const Selectors = ({name,title, optionData}: SelectorProps) => {
     if (value !== 'cover') setFilter(name, value);
     setIsClick(prev => !prev);
   }
-  // ${isClick ? 'h-[180px] overflow-y-scroll' : 'h-9 overflow-hidden'}
+
   return (
     <div 
     className={`inline-block relative bg-zinc-100 m-2 rounded-lg text-center border-t select-none cursor-pointer`}
     title={name}
     aria-label={title}>
-      <div className={"w-full py-2 pl-2 pr-6 after:content-[''] after:absolute after:right-2 after:top-4 after:border-t-[7px] after:border-x-[7px] after:border-solid after:border-x-transparent after:border-t-black"} onClick={handleSelectValue}>{filter[name] === 'all' ? title : filter[name] }</div>
-      <ul className={`${isClick ? 'block' : 'hidden'} absolute top-12 h-[200px] rounded-lg overflow-x-hidden overflow-y-auto`}>
-        <li className="w-full py-2 px-4 shadow bg-zinc-100" value="all" onClick={handleSelectValue}>all</li>
-        {optionData.length > 0 ? optionData.map((data, index) => <li className="w-full py-2 px-4 shadow bg-zinc-100" key={index} value={data} onClick={handleSelectValue}>{data}</li>): null}
+      <div tabIndex={1} className={"w-full py-2 pl-2 pr-6 after:content-[''] after:absolute after:right-2 after:top-4 after:border-t-[7px] after:border-x-[7px] after:border-solid after:border-x-transparent after:border-t-black"} onClick={handleSelectValue}>{filter[name] === 'all' ? title : filter[name] }</div>
+      <ul className={`${isClick ? 'block' : 'hidden'} absolute top-12 h-[200px] rounded-lg overflow-x-hidden overflow-y-auto`} onClick={handleSelectValue}>
+        <li className="w-full py-2 px-4 shadow bg-zinc-100" value="all">all</li>
+        {optionData.length > 0 ? optionData.map((data, index) => <li className="w-full py-2 px-4 shadow bg-zinc-100" key={index} value={data}>{data}</li>): null}
       </ul>
     </div>
   )

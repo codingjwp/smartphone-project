@@ -1,4 +1,4 @@
-import { create } from "zustand"
+import { create, StateCreator } from "zustand"
 import { persist} from 'zustand/middleware'
 
 type PhoneData = {
@@ -30,46 +30,65 @@ interface PhoneObject {
   [key: string]: PhoneData[] | CategoryData;
 }
 
-interface IPhoneStore {
-  pages: {page: number, totalPage: number},
+
+interface IPhoneSlice {
   category: string[];
-  filter: FilterGroups;
   baseData: PhoneObject;
   phoneData: PhoneData[];
+}
+
+const createPhoneSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IPhoneSlice> = (set) => ({
+  category: [],
+  baseData: {},
+  phoneData: [],
+})
+
+interface IPageSlice {
+  pages: {page: number, totalPage: number},
   setNextPage: () => void;
+}
+
+const createPageSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IPageSlice> = (set) => ({
+  pages: {page: 1, totalPage: 1},
+  setNextPage: () => set(({pages}) => ({
+    pages: {
+      ...pages,
+      page: (pages.page + 1) > pages.totalPage ? pages.page : ++pages.page
+    }
+  })),
+})
+
+interface IFilterSlice {
+  filter: FilterGroups;
   setFilter: (keys: string, value: string) => void;
 }
 
-export const usePhoneStore = create<IPhoneStore>()(
+const createFilterSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IFilterSlice> = (set) => ({
+  filter: { brand: 'all', storage: 'all', os: 'all', text: ''},
+  setFilter: (keys, value) => set(({filter}) => ({
+    filter: { ...filter, [keys]: value }
+  }))
+})
+
+
+export const usePhoneStore = create<IPageSlice & IFilterSlice & IPhoneSlice>()(
   persist(
-    (set) => ({
-      pages: {page: 1, totalPage: 1},
-      category: [],
-      filter: { brand: 'all', storage: 'all', os: 'all', text: ''},
-      baseData: {},
-      phoneData: [],
-      setNextPage: () => set(({pages}) => ({
-        pages: {
-          ...pages,
-          page: (pages.page + 1) > pages.totalPage ? pages.page : ++pages.page
-        }
-      })),
-      setFilter: (keys, value) => set(({filter}) => ({
-        filter: { ...filter, [keys]: value }
-      }))
-    }),
-    {
-      name: 'base-store',
-      partialize: (state) => ({
-        pages: state.pages,
-        category: state.category,
-        filter: state.filter,
-        baseData: state.baseData,
-        phoneData: state.phoneData,
-      })
-    }
-  )
-)
+  (...props) => ({
+  ...createPageSlice(...props),
+  ...createFilterSlice(...props),
+  ...createPhoneSlice(...props),
+  }),
+  {
+    name: 'base-store',
+    partialize: (state) => ({
+      pages: state.pages,
+      category: state.category,
+      filter: state.filter,
+      baseData: state.baseData,
+      phoneData: state.phoneData,
+    })
+  }
+))
 
 export const createPhones = () => {
   fetch('db.json')
@@ -83,7 +102,3 @@ export const createPhones = () => {
       }));
     });
 }
-
-export const pagePhones = () => usePhoneStore.setState(({pages, baseData, phoneData}) => ({
-  phoneData: !baseData ? [] : [...phoneData, ...(baseData[`${pages.page}`] as PhoneData[])]
-}))

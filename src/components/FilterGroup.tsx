@@ -1,10 +1,8 @@
 import { ReactNode } from "react";
 
-
-
 const FilterGroup = ({children}: {children: ReactNode}) => {
   return (
-    <div className="flex justify-around">
+    <div className="flex flex-wrap justify-around">
       {children}
     </div>
   )
