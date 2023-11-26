@@ -1,6 +1,7 @@
 import { create, StateCreator } from "zustand"
 import { persist} from 'zustand/middleware'
 
+/** Phone 관련 Data Store */
 type PhoneData = {
   brands: string;
   model: string;
@@ -19,30 +20,25 @@ type CategoryData = {
   totalPage: number;
 }
 
-type FilterGroups = {
-  brand: string;
-  storage: string;
-  os: string;
-  text: string;
-}
-
 interface PhoneObject {
   [key: string]: PhoneData[] | CategoryData;
 }
-
 
 interface IPhoneSlice {
   category: string[];
   baseData: PhoneObject;
   phoneData: PhoneData[];
+  filterData: PhoneData[];
 }
 
 const createPhoneSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IPhoneSlice> = (set) => ({
   category: [],
   baseData: {},
   phoneData: [],
+  filterData: [],
 })
 
+/** page 관련 Store */
 interface IPageSlice {
   pages: {page: number, totalPage: number},
   setNextPage: () => void;
@@ -58,15 +54,36 @@ const createPageSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [],
   })),
 })
 
+
+/** Filter 관련 Store */
+type FilterGroups = {
+  brand: string;
+  storage: string;
+  os: string;
+}
+
 interface IFilterSlice {
   filter: FilterGroups;
   setFilter: (keys: string, value: string) => void;
 }
 
-const createFilterSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IFilterSlice> = (set) => ({
-  filter: { brand: 'all', storage: 'all', os: 'all', text: ''},
+const createFilterSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IFilterSlice> = (set, get) => ({
+  filter: { brand: 'all', storage: 'all', os: 'all' },
   setFilter: (keys, value) => set(({filter}) => ({
-    filter: { ...filter, [keys]: value }
+    filter: keys === 'text' ? filter : { ...filter, [keys]: value },
+    filterData: get().phoneData.filter((phone) => {
+      const brands = keys === 'brand' 
+        ? (value === 'all' ? true : phone.brands.includes(value))
+        : (filter.brand === 'all' || phone.brands.includes(filter.brand));
+      const storage = keys === 'storage' 
+        ? (value === 'all' ? true : phone.storage.includes(value))
+        : (filter.storage === 'all' || phone.storage.includes(filter.storage));
+      const os = keys === 'os' 
+        ? (value === 'all' ? true : phone.os.includes(value))
+        : (filter.os === 'all' || phone.os.includes(filter.os));
+      const text = keys === 'text' ? phone.model.includes(value) : true;
+      return brands && storage && os && text;
+    })
   }))
 })
 
@@ -86,6 +103,7 @@ export const usePhoneStore = create<IPageSlice & IFilterSlice & IPhoneSlice>()(
       filter: state.filter,
       baseData: state.baseData,
       phoneData: state.phoneData,
+      filterData: state.phoneData,
     })
   }
 ))
@@ -94,11 +112,17 @@ export const createPhones = () => {
   fetch('db.json')
     .then((res) => res.json())
     .then((data: PhoneObject) => {
-      usePhoneStore.setState(({pages}) => ({
+      usePhoneStore.setState(({pages, filter}) => ({
         category: (data.category as CategoryData).brands,
         pages: { ...pages, totalPage: (data.category as CategoryData).totalPage },
         baseData: data,
-        phoneData:(data[`${pages.page}`] as PhoneData[])
+        phoneData:(data[`${pages.page}`] as PhoneData[]),
+        filterData: (data[`${pages.page}`] as PhoneData[]).filter((phone) => {
+          const brands = filter.brand === 'all' || phone.brands.includes(filter.brand);
+          const storage = filter.storage === 'all' || phone.storage.includes(filter.storage);
+          const os = filter.os === 'all' || phone.os.includes(filter.os);
+          return brands && storage && os;
+        })
       }));
     });
 }
