@@ -1,15 +1,13 @@
+import PhoneTable from "./components/PhoneTable";
 import SearchHeader from "./components/SearchHeader";
-import { usePhoneStore } from "./states/stores";
 
 const FilterMain = () => {
-  const filterData = usePhoneStore((state) => state.filterData);
+  
 
   return (
-    <main className="relativ">
+    <main className="flex flex-col justify-center items-center relativ">
       <SearchHeader />
-      <div>
-        {filterData.length > 0 ?  <div>{JSON.stringify(filterData)}</div> : null}
-      </div>
+      <PhoneTable />
     </main>
   )
 }

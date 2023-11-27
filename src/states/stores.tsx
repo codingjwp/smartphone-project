@@ -103,7 +103,7 @@ export const usePhoneStore = create<IPageSlice & IFilterSlice & IPhoneSlice>()(
       filter: state.filter,
       baseData: state.baseData,
       phoneData: state.phoneData,
-      filterData: state.phoneData,
+      filterData: state.filterData,
     })
   }
 ))
