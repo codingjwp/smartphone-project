@@ -81,7 +81,7 @@ const createFilterSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [
       const os = keys === 'os' 
         ? (value === 'all' ? true : phone.os.includes(value))
         : (filter.os === 'all' || phone.os.includes(filter.os));
-      const text = keys === 'text' ? phone.model.includes(value) : true;
+      const text = keys === 'text' ? phone.model.toLowerCase().includes(value) : true;
       return brands && storage && os && text;
     })
   }))

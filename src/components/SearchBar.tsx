@@ -8,7 +8,7 @@ const SearchBar = () => {
   const setFilter = usePhoneStore((state) => state.setFilter);
 
   const EnterFilter = (e: KeyboardEvent<HTMLInputElement> & MouseEvent<HTMLButtonElement>) => {
-    const text = (inputRef.current as HTMLInputElement).value;
+    const text = (inputRef.current as HTMLInputElement).value.toLowerCase();
     if ((e.type === 'keydown' && text !== '' && e.key === 'Enter') || (e.type === 'click' && text != '')) {
       setFilter('text', text); 
       (inputRef.current as HTMLInputElement).value = ''

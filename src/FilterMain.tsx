@@ -1,13 +1,24 @@
+import { useState } from "react";
+import PhoneDetail from "./components/PhoneDetail";
 import PhoneTable from "./components/PhoneTable";
 import SearchHeader from "./components/SearchHeader";
 
-const FilterMain = () => {
-  
+type DetailObj = {
+  id: number,
+  isOpen: boolean
+}
 
+const FilterMain = () => {
+  const [detail, setDetail] = useState<DetailObj>({id: 0, isOpen: false});
+  const handleDetailClick = (id: number, isOpen: boolean) => {
+    setDetail({ id: id, isOpen: isOpen});
+  }
+  
   return (
-    <main className="flex flex-col justify-center items-center relativ">
+    <main className="flex flex-col justify-center items-center mt-11">
       <SearchHeader />
-      <PhoneTable />
+      <PhoneTable detailClick={handleDetailClick} />
+      <PhoneDetail detail={detail} handleClick={handleDetailClick} />
     </main>
   )
 }
