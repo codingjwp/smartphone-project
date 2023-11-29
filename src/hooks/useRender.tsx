@@ -1,11 +1,10 @@
 import { RefObject, useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export const useRender = (action: boolean, canvasRef: RefObject<HTMLCanvasElement>, imgUrl: string) => {
   const animateRef = useRef<number>();
-
   useEffect(() => {
     if (!action) return;
     if (!canvasRef.current) return;
@@ -19,16 +18,18 @@ export const useRender = (action: boolean, canvasRef: RefObject<HTMLCanvasElemen
       antialias: true
     })
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    
+
     const controls = new OrbitControls(camera, renderer.domElement)
-    camera.position.set(0, 0, 1);
+    camera.position.set(0.1, 0, 1);
     controls.target.set(0, 0, 0);
+    controls.minDistance = 0.5;
+    controls.maxDistance = 1;
     controls.update();
 
     const loader = new GLTFLoader();
     loader.load(imgUrl, (gltf) => {
-       scenc.add(gltf.scene)
-       if (!animateRef.current) {
+      scenc.add(gltf.scene)
+      if (!animateRef.current) {
         const animate = () => {
           animateRef.current = requestAnimationFrame(animate);
           controls.update();
@@ -36,7 +37,7 @@ export const useRender = (action: boolean, canvasRef: RefObject<HTMLCanvasElemen
           renderer.render(scenc, camera);
         }
         animate();
-       }
+      }
     })
     return () => {
       if (animateRef.current) {

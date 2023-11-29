@@ -1,5 +1,5 @@
 import { create, StateCreator } from "zustand"
-import { persist} from 'zustand/middleware'
+import { persist } from 'zustand/middleware'
 
 /** Phone 관련 Data Store */
 type PhoneData = {
@@ -13,6 +13,7 @@ type PhoneData = {
   height: string;
   width: string;
   id: number;
+  modeling: string;
 }
 
 type CategoryData = {
@@ -27,26 +28,31 @@ interface PhoneObject {
 interface IPhoneSlice {
   category: string[];
   baseData: PhoneObject;
-  phoneData: PhoneData[];
+  phoneList: PhoneData[];
   filterData: PhoneData[];
+  setDetail: (id: number) => PhoneData | undefined;
 }
 
-const createPhoneSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IPhoneSlice> = (set) => ({
+const createPhoneSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IPhoneSlice> = (set, get) => ({
   category: [],
   baseData: {},
-  phoneData: [],
+  phoneList: [],
   filterData: [],
+  setDetail: (id) => {
+    const filter = get().filterData.find((item) => item.id === id);
+    return filter;
+  }
 })
 
 /** page 관련 Store */
 interface IPageSlice {
-  pages: {page: number, totalPage: number},
+  pages: { page: number, totalPage: number },
   setNextPage: () => void;
 }
 
 const createPageSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IPageSlice> = (set) => ({
-  pages: {page: 1, totalPage: 1},
-  setNextPage: () => set(({pages}) => ({
+  pages: { page: 1, totalPage: 1 },
+  setNextPage: () => set(({ pages }) => ({
     pages: {
       ...pages,
       page: (pages.page + 1) > pages.totalPage ? pages.page : ++pages.page
@@ -69,16 +75,16 @@ interface IFilterSlice {
 
 const createFilterSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IFilterSlice> = (set, get) => ({
   filter: { brand: 'all', storage: 'all', os: 'all' },
-  setFilter: (keys, value) => set(({filter}) => ({
+  setFilter: (keys, value) => set(({ filter }) => ({
     filter: keys === 'text' ? filter : { ...filter, [keys]: value },
-    filterData: get().phoneData.filter((phone) => {
-      const brands = keys === 'brand' 
+    filterData: get().phoneList.filter((phone) => {
+      const brands = keys === 'brand'
         ? (value === 'all' ? true : phone.brands.includes(value))
         : (filter.brand === 'all' || phone.brands.includes(filter.brand));
-      const storage = keys === 'storage' 
+      const storage = keys === 'storage'
         ? (value === 'all' ? true : phone.storage.includes(value))
         : (filter.storage === 'all' || phone.storage.includes(filter.storage));
-      const os = keys === 'os' 
+      const os = keys === 'os'
         ? (value === 'all' ? true : phone.os.includes(value))
         : (filter.os === 'all' || phone.os.includes(filter.os));
       const text = keys === 'text' ? phone.model.toLowerCase().includes(value) : true;
@@ -90,33 +96,33 @@ const createFilterSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [
 
 export const usePhoneStore = create<IPageSlice & IFilterSlice & IPhoneSlice>()(
   persist(
-  (...props) => ({
-  ...createPageSlice(...props),
-  ...createFilterSlice(...props),
-  ...createPhoneSlice(...props),
-  }),
-  {
-    name: 'base-store',
-    partialize: (state) => ({
-      pages: state.pages,
-      category: state.category,
-      filter: state.filter,
-      baseData: state.baseData,
-      phoneData: state.phoneData,
-      filterData: state.filterData,
-    })
-  }
-))
+    (...props) => ({
+      ...createPageSlice(...props),
+      ...createFilterSlice(...props),
+      ...createPhoneSlice(...props),
+    }),
+    {
+      name: 'base-store',
+      partialize: (state) => ({
+        pages: state.pages,
+        category: state.category,
+        filter: state.filter,
+        baseData: state.baseData,
+        phoneList: state.phoneList,
+        filterData: state.filterData,
+      })
+    }
+  ))
 
 export const createPhones = () => {
   fetch('db.json')
     .then((res) => res.json())
     .then((data: PhoneObject) => {
-      usePhoneStore.setState(({pages, filter}) => ({
+      usePhoneStore.setState(({ pages, filter }) => ({
         category: (data.category as CategoryData).brands,
         pages: { ...pages, totalPage: (data.category as CategoryData).totalPage },
         baseData: data,
-        phoneData:(data[`${pages.page}`] as PhoneData[]),
+        phoneList: (data[`${pages.page}`] as PhoneData[]),
         filterData: (data[`${pages.page}`] as PhoneData[]).filter((phone) => {
           const brands = filter.brand === 'all' || phone.brands.includes(filter.brand);
           const storage = filter.storage === 'all' || phone.storage.includes(filter.storage);
