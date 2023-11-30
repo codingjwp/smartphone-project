@@ -5,6 +5,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export const useRender = (action: boolean, canvasRef: RefObject<HTMLCanvasElement>, imgUrl: string) => {
   const animateRef = useRef<number>();
+
   useEffect(() => {
     if (!action) return;
     if (!canvasRef.current) return;

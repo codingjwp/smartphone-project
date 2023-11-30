@@ -50,14 +50,18 @@ interface IPageSlice {
   setNextPage: () => void;
 }
 
-const createPageSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IPageSlice> = (set) => ({
+const createPageSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IPageSlice> = (set, get) => ({
   pages: { page: 1, totalPage: 1 },
-  setNextPage: () => set(({ pages }) => ({
-    pages: {
-      ...pages,
-      page: (pages.page + 1) > pages.totalPage ? pages.page : ++pages.page
+  setNextPage: () => {
+    const prev = get().pages.page;
+    const next = (prev + 1) > get().pages.totalPage ? prev : prev + 1;
+    const nextData = !(prev === next && prev === get().pages.totalPage) ? get().baseData[`${next}`] as PhoneData[] : [];
+    set(({pages}) => ({ pages: { ...pages, page: next } }))
+    if (nextData.length > 0) {
+      set(({phoneList}) => ({ phoneList: [...phoneList, ...nextData]}))
+      get().setFilter('text', '');
     }
-  })),
+  }
 })
 
 
