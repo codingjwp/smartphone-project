@@ -13,16 +13,16 @@ interface DetailProps {
 }
 
 const PhoneDetail = ({ detail, handleClick }: DetailProps) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const phoneDetail = usePhoneStore((state) => state.setDetail(detail.id));
   useRender(detail.isOpen, canvasRef, `src/assets/${phoneDetail ? phoneDetail.modeling : '001.glb'}`);
   const afterStyle = "after:content-[''] after:absolute after:left-1/3 after:top-1/2 after:-translate-y-1/2 after:border-r-[7px] after:border-y-[7px] after:border-solid after:border-y-transparent after:border-r-black";
   return (
-    <article className={`flex justify-end fixed top-0 right-0 ${detail.isOpen ? 'w-screen' : 'w-0'} h-screen z-10`}>
-      <div className={`${detail.isOpen ? 'w-[93vw] p-10' : 'w-0'} relative h-screen bg-slate-50 z-[12]`}>
-        <div className='grid grid-rows-2 w-full h-full gap-6 overflow-y-auto'>
-          <canvas ref={canvasRef} width={250} height={250} />
-          <div className='flex flex-col gap-2 w-full'>
+    <article className={`flex justify-end fixed top-0 right-0 ${detail.isOpen ? 'w-screen' : 'w-0'} h-full z-10`}>
+      <div className={`${detail.isOpen ? 'w-[93vw] p-10' : 'w-0'} relative h-full bg-slate-50 z-[12]`}>
+        <div className='flex flex-col portrait:justify-center items-center gap-6 w-full h-full overflow-y-auto'>
+          <canvas ref={canvasRef} className='w-[250px] h-[250px] min-h-[250px] md:w-[500px] md:h-[350px]' />
+          <div className='flex flex-col items-start gap-2 w-full max-w-fit font-bold md:text-lg'>
             <span>{"브랜드 : "}{phoneDetail ? `${phoneDetail.brands}` : ''}</span>
             <span>{"모델 : "}{phoneDetail ? `${phoneDetail.model}` : ''}</span>
             <span>{"OS : "}{phoneDetail ? `${phoneDetail.os}` : ''}</span>

@@ -10,7 +10,7 @@ export const useRender = (action: boolean, canvasRef: RefObject<HTMLCanvasElemen
     if (!action) return;
     if (!canvasRef.current) return;
     const scenc = new THREE.Scene();
-    scenc.background = new THREE.Color('white');
+    scenc.background = new THREE.Color('#F8FAFC');
     const camera = new THREE.PerspectiveCamera(10, canvasRef.current.clientWidth / canvasRef.current.clientHeight, 0.1, 1000);
     const light = new THREE.DirectionalLight(0xffffff, 3);
     scenc.add(light);
