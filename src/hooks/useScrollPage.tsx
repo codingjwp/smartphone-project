@@ -28,6 +28,6 @@ export const useScrollPage = () => {
     return () => {
       observer.disconnect();
     }
-  }, [pages.page, pages.totalPage])
+  }, [pages.page, pages.totalPage, setNextPage])
   return {ref};
 }

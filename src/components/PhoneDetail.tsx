@@ -15,7 +15,7 @@ interface DetailProps {
 const PhoneDetail = ({ detail, handleClick }: DetailProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const phoneDetail = usePhoneStore((state) => state.setDetail(detail.id));
-  useRender(detail.isOpen, canvasRef, `src/assets/${phoneDetail ? phoneDetail.modeling : '001.glb'}`);
+  useRender(detail.isOpen, canvasRef, `${phoneDetail ? phoneDetail.modeling : '001.glb'}`);
   const afterStyle = "after:content-[''] after:absolute after:left-1/3 after:top-1/2 after:-translate-y-1/2 after:border-r-[7px] after:border-y-[7px] after:border-solid after:border-y-transparent after:border-r-black";
   return (
     <article className={`flex justify-end fixed top-0 right-0 ${detail.isOpen ? 'w-screen' : 'w-0'} h-full z-10`}>

@@ -28,7 +28,7 @@ export const useRender = (action: boolean, canvasRef: RefObject<HTMLCanvasElemen
     controls.update();
 
     const loader = new GLTFLoader();
-    loader.load(imgUrl, (gltf) => {
+    loader.load(`${import.meta.env.BASE_URL}assets/${imgUrl}`, (gltf) => {
       scenc.add(gltf.scene)
       if (!animateRef.current) {
         const animate = () => {
@@ -48,5 +48,5 @@ export const useRender = (action: boolean, canvasRef: RefObject<HTMLCanvasElemen
       controls.dispose();
       renderer.dispose();
     }
-  }, [imgUrl, action])
+  }, [imgUrl, action, canvasRef])
 }

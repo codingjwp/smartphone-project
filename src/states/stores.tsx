@@ -33,7 +33,7 @@ interface IPhoneSlice {
   setDetail: (id: number) => PhoneData | undefined;
 }
 
-const createPhoneSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IPhoneSlice> = (set, get) => ({
+const createPhoneSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IPhoneSlice> = (_, get) => ({
   category: [],
   baseData: {},
   phoneList: [],
@@ -119,7 +119,7 @@ export const usePhoneStore = create<IPageSlice & IFilterSlice & IPhoneSlice>()(
   ))
 
 export const createPhones = () => {
-  fetch('db.json')
+  fetch('/db.json')
     .then((res) => res.json())
     .then((data: PhoneObject) => {
       usePhoneStore.setState(({ pages, filter }) => ({
