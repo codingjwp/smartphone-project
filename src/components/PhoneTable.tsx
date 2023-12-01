@@ -20,8 +20,8 @@ const PhoneTable = ({detailClick}: TableProps) => {
             <th className="hidden md:table-cell py-2 border border-cyan-600"><span>램<sub>(GB)</sub></span></th>
             <th className="hidden md:table-cell py-2 border border-cyan-600"><span>저장소<sub>(GB)</sub></span></th>
             <th className="hidden md:table-cell py-2 border border-cyan-600"><span>배터리<sub>(mAh)</sub></span></th>
-            <th className="py-2 hidden border border-cyan-600"><span>스크린(in)</span></th>
-            <th className="py-2 hidden border border-cyan-600"><span>해상도</span></th>
+            <th className="hidden lg:table-cell py-2 border border-cyan-600"><span>스크린(in)</span></th>
+            <th className="hidden lg:table-cell py-2 border border-cyan-600"><span>해상도</span></th>
           </tr>
         </thead>
         <tbody>
@@ -38,8 +38,8 @@ const PhoneTable = ({detailClick}: TableProps) => {
                   <td className="hidden md:table-cell px-1 border border-cyan-700 text-center">{data.ram.replaceAll(' ',', ')}</td>
                   <td className="hidden md:table-cell px-1 border border-cyan-700 text-center">{data.storage.replaceAll(' ',', ')}</td>
                   <td className="hidden md:table-cell px-1 border border-cyan-700 text-center">{data.battery}</td>
-                  <td className="hidden px-1 border border-cyan-700 text-center">{data.screen}</td>
-                  <td className="hidden px-1 border border-cyan-700 text-center">{data.width} X {data.height}</td>
+                  <td className="hidden lg:table-cell px-1 border border-cyan-700 text-center">{data.screen}</td>
+                  <td className="hidden lg:table-cell px-1 border border-cyan-700 text-center">{data.width} X {data.height}</td>
                 </tr>
               )
             }) 

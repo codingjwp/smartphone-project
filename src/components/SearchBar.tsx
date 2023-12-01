@@ -17,8 +17,8 @@ const SearchBar = () => {
 
 
   return (
-    <div className="flex w-full">
-      <input className="w-full h-8 mt-2 ml-2 border-b-4 border-solid border-cyan-600 outline-none"
+    <div className="flex w-full items-center lg:w-[480px]">
+      <input className="w-full h-10 ml-2 border-b-4 border-solid border-cyan-600 outline-none"
         aria-label="검색바" type="text" placeholder="Smart Phone Model"
         ref={inputRef} onKeyDown={EnterFilter}/>
       <button className="px-4" type="button" onClick={EnterFilter}>

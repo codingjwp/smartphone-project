@@ -15,7 +15,7 @@ const FilterMain = () => {
   }
   
   return (
-    <main className="flex flex-col justify-center items-center mt-11">
+    <main className="flex flex-col justify-center items-center mt-11 xl:max-w-7xl xl:mx-auto">
       <SearchHeader />
       <PhoneTable detailClick={handleDetailClick} />
       <PhoneDetail detail={detail} handleClick={handleDetailClick} />
