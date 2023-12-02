@@ -1,0 +1,22 @@
+{
+  "name": "스마트폰 정보",
+  "icons": [
+    {
+      "src": "/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "display": "fullscreen",
+  "start_url": "/",
+  "description": "스마트폰 스펙에 대한 정보 및 3D 이미지 제공",
+  "background_color": "#FFFFFF",
+  "short_name": "SPD",
+  "theme_color": "#FFFFFF",
+  "orientation": "portrait"
+}
