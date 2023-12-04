@@ -21,7 +21,7 @@ const SearchBar = () => {
       <input className="w-full h-10 ml-2 border-b-4 border-solid border-cyan-600 outline-none"
         aria-label="검색바" type="text" placeholder="Smart Phone Model"
         ref={inputRef} onKeyDown={EnterFilter}/>
-      <button className="px-4" type="button" onClick={EnterFilter}>
+      <button className="px-4" type="button" onClick={EnterFilter} aria-label="검색바 버튼">
         <SearchSvg/>
       </button>
     </div>

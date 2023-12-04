@@ -25,6 +25,10 @@ export const useRender = (action: boolean, canvasRef: RefObject<HTMLCanvasElemen
     controls.target.set(0, 0, 0);
     controls.minDistance = 0.5;
     controls.maxDistance = 1;
+    controls.touches = {
+      ONE: THREE.TOUCH.ROTATE,
+      TWO: THREE.TOUCH.DOLLY_PAN
+    }
     controls.update();
 
     const loader = new GLTFLoader();

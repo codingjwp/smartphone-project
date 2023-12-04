@@ -13,15 +13,15 @@ const PhoneTable = ({detailClick}: TableProps) => {
     <>
       <table className="table-auto mt-5 w-full border-separate border-spacing-1 border-cyan-500">
         <thead className="relative">
-          <tr className="bg-cyan-600 text-cyan-50 sticky top-[46px]">
-            <th className="py-2 border-cyan-600"><span>브랜드</span></th>
-            <th className="py-2 border border-cyan-600"><span>모델</span></th>
-            <th className="py-2 border border-cyan-600"><span>OS</span></th>
-            <th className="hidden md:table-cell py-2 border border-cyan-600"><span>램<sub>(GB)</sub></span></th>
-            <th className="hidden md:table-cell py-2 border border-cyan-600"><span>저장소<sub>(GB)</sub></span></th>
-            <th className="hidden md:table-cell py-2 border border-cyan-600"><span>배터리<sub>(mAh)</sub></span></th>
-            <th className="hidden lg:table-cell py-2 border border-cyan-600"><span>스크린(in)</span></th>
-            <th className="hidden lg:table-cell py-2 border border-cyan-600"><span>해상도</span></th>
+          <tr className="bg-cyan-800 text-cyan-50 sticky top-[46px]">
+            <th className="py-2 border-cyan-800"><span>브랜드</span></th>
+            <th className="py-2 border border-cyan-800"><span>모델</span></th>
+            <th className="py-2 border border-cyan-800"><span>OS</span></th>
+            <th className="hidden md:table-cell py-2 border border-cyan-800"><span>램<sub>(GB)</sub></span></th>
+            <th className="hidden md:table-cell py-2 border border-cyan-800"><span>저장소<sub>(GB)</sub></span></th>
+            <th className="hidden md:table-cell py-2 border border-cyan-800"><span>배터리<sub>(mAh)</sub></span></th>
+            <th className="hidden lg:table-cell py-2 border border-cyan-800"><span>스크린(in)</span></th>
+            <th className="hidden lg:table-cell py-2 border border-cyan-800"><span>해상도</span></th>
           </tr>
         </thead>
         <tbody>
