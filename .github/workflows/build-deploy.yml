@@ -29,11 +29,11 @@ jobs:
         run: |
           npm run build
           mkdir deploy
-          git worktree add deploy deploy
-          cp -r dist deploy
-          cd deploy
+          git worktree add ../deploy deploy
+          cp -r dist/ ../deploy
+          cd ../deploy
           git config --global user.name "codingjwp"
           git config --global user.email "codingjwp@github.com"
-          git add dist
-          git commit -m "deploy: new dist folder"
+          git add .
+          git commit -m "deploy: new deploy"
           git push origin deploy
