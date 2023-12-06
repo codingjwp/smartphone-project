@@ -25,15 +25,12 @@ jobs:
       - name: Install dependencies
         if: steps.cache.output.cache-hit != 'true'
         run: npm ci
-      - name: Build and Deploy
-        run: |
-          npm run build
-          mkdir deploy
-          git worktree add ../deploy deploy
-          cp -r dist/ ../deploy
-          cd ../deploy
-          git config --global user.name "codingjwp"
-          git config --global user.email "codingjwp@github.com"
-          git add .
-          git commit -m "deploy: new deploy"
-          git push origin deploy
+        
+      - name: Build 
+        run: npm run build
+
+      - name: Deploy Github Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: deploy
