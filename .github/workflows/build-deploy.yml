@@ -20,7 +20,7 @@ jobs:
         id: cache-node-module
         with:
           path: node_modules
-          key: npm-packages-${{ hashFile('**/package-lock.json') }}
+          key: npm-packages-${{ hashFiles('**/package-lock.json') }}
           
       - name: Install dependencies
         if: setps.cache.output.cache-hit != 'true'
