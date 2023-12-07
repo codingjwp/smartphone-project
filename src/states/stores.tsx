@@ -119,7 +119,7 @@ export const usePhoneStore = create<IPageSlice & IFilterSlice & IPhoneSlice>()(
   ))
 
 export const createPhones = () => {
-  fetch('/db.json')
+  fetch('https://codingjwp.github.io/smartphone-project/db.json')
     .then((res) => res.json())
     .then((data: PhoneObject) => {
       usePhoneStore.setState(({ pages, filter }) => ({
