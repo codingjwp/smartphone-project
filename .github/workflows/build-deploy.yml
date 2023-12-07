@@ -33,5 +33,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           token: '${{ secrets.ACTION_TOKEN }}'
-          folder: dist
+          folder: .
           branch: deploy
