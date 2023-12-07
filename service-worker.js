@@ -1,18 +1,18 @@
 const CACHE_NAME=['spd/v1'];
 const URLS_TO_CACHE = [
-    '/',
-    '/db.json',
-    '/favicon.ico',
-    '/manifest.webmanifest',
-    '/assets/001.glb',
-    '/assets/002.glb',
-    '/assets/003.glb',
-    '/icons/iconX48.png',
-    '/icons/iconX72.png',
-    '/icons/iconX96.png',
-    '/icons/iconX144.png',
-    '/icons/iconX192.png',
-    '/icons/iconX512.png'
+    '/smartphone-project',
+    '/smartphone-project/db.json',
+    '/smartphone-project/favicon.ico',
+    '/smartphone-project/manifest.webmanifest',
+    '/smartphone-project/assets/001.glb',
+    '/smartphone-project/assets/002.glb',
+    '/smartphone-project/assets/003.glb',
+    '/smartphone-project/icons/iconX48.png',
+    '/smartphone-project/icons/iconX72.png',
+    '/smartphone-project/icons/iconX96.png',
+    '/smartphone-project/icons/iconX144.png',
+    '/smartphone-project/icons/iconX192.png',
+    '/smartphone-project/icons/iconX512.png'
 ];
 
 self.addEventListener('install', (event) => {
