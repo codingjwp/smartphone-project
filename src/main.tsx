@@ -4,7 +4,7 @@ import App from './App.tsx'
 import './global.css'
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register('/smartphone-project/service-worker.js')
+  navigator.serviceWorker.register('/service-worker.js')
     .then((registration)=> {
       if (registration.waiting) {
         console.log("실행", registration);
