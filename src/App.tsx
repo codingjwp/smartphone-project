@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { usePhoneStore, createPhones } from "./states/stores"
 import Headers from "./components/Headers";
 import FilterMain from "./FilterMain";
+import { Toast } from "./components/Toast";
 
 function App() {
   const baseData = usePhoneStore((state) => state.baseData);
@@ -11,6 +12,7 @@ function App() {
   
   return (
     <div>
+      <Toast />
       <Headers title="Smart Phone Data List"/>
       <FilterMain />
     </div>
