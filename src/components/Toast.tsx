@@ -1,30 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 
 export const Toast = () => {
+  const timeRef = useRef<number>()
   const [isOpen, setIsOpen] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
 
-  const handelCloseToInstall = async () => {
+  const handelCloseToInstall = () => {
     setIsOpen(false);
     if (!deferredPrompt) return ;
     deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-  } 
+    setDeferredPrompt(null);
+  }
+
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
       setIsOpen(true);
-      // console.log("Test");
-      // (e as BeforeInstallPromptEvent).prompt();
+      timeRef.current = setTimeout(()=> { setIsOpen(false) }, 5000)
     }
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);  
-    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      if (timeRef.current) clearTimeout(timeRef.current);
+    }
   }, [])
 
   return (
-    <div className="fixed w-56 h-16 -top-20 left-1/2 -translate-x-1/2 bg-cyan-900 rounded-md z-20">
+    <div className={`fixed w-56 h-16 ${isOpen ? "top-10" : "-top-20"}  left-1/2 -translate-x-1/2 bg-cyan-900 rounded-md z-20`}>
       <div className='flex flex-row h-full items-center justify-evenly'>
         <img className='rounded-2xl' src='/icons/iconX48.png' alt='smartphone data'/>
         <div className='flex flex-col justify-center gap-1 text-sm'>
