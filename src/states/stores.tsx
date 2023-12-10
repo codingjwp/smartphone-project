@@ -27,7 +27,6 @@ interface PhoneObject {
 
 interface IPhoneSlice {
   category: string[];
-  baseData: PhoneObject;
   phoneList: PhoneData[];
   filterData: PhoneData[];
   setDetail: (id: number) => PhoneData | undefined;
@@ -111,7 +110,6 @@ export const usePhoneStore = create<IPageSlice & IFilterSlice & IPhoneSlice>()(
         pages: state.pages,
         category: state.category,
         filter: state.filter,
-        baseData: state.baseData,
         phoneList: state.phoneList,
         filterData: state.filterData,
       })
@@ -122,17 +120,10 @@ export const createPhones = () => {
   fetch('/db.json')
     .then((res) => res.json())
     .then((data: PhoneObject) => {
-      usePhoneStore.setState(({ pages, filter }) => ({
+      usePhoneStore.setState(({ pages }) => ({
         category: (data.category as CategoryData).brands,
         pages: { ...pages, totalPage: (data.category as CategoryData).totalPage },
-        baseData: data,
-        phoneList: (data[`${pages.page}`] as PhoneData[]),
-        filterData: (data[`${pages.page}`] as PhoneData[]).filter((phone) => {
-          const brands = filter.brand === 'all' || phone.brands.includes(filter.brand);
-          const storage = filter.storage === 'all' || phone.storage.includes(filter.storage);
-          const os = filter.os === 'all' || phone.os.includes(filter.os);
-          return brands && storage && os;
-        })
+        phoneList: (data[`${pages.page}`] as PhoneData[])
       }));
     });
 }

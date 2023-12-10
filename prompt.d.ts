@@ -8,8 +8,8 @@ interface BeforeInstallPromptEvent extends Event {
 
 }
 
-declare module beforeinstallprompt {
-  interface WindowEventMap {
-    beforeinstallprompt: BeforeInstallPromptEvent;
-  }
-}
+// declare module beforeinstallprompt {
+//   interface WindowEventMap {
+//     beforeinstallprompt: BeforeInstallPromptEvent;
+//   }
+// }
