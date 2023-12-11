@@ -18,9 +18,9 @@ type FunctionModel = {
     newCategory: string[],
     newPhoneList: PhoenDetailData[]) => void,
   setNextPage: () => void,
-  setPhoneList: (data: PhoneData) => void,
+  setPhoneList: (data: PhoenDetailData[]) => void,
   setFilter: (keys: string, value: string) => void,
-  setDetail: (id: number) => PhoenDetailData[] | undefined
+  setDetail: (id: number) => PhoenDetailData | undefined
 }
 
 const createFinshSlice: StateCreator<CategorysData & TotalPageData & FilterGroups & PhoneData,
@@ -48,13 +48,11 @@ const createFinshSlice: StateCreator<CategorysData & TotalPageData & FilterGroup
       }))
     },
     setFilter: (keys, value) => set(({ filters }) => ({
-      filters: keys === 'text' ? filters : { ...filters, [keys]: value },
+      filters: { ...filters, [keys]: value },
     })),
     setDetail: (id) => {
-      const detail = get().phoneList.filter((list) => {
-        list.id === id
-      })
-      return detail
+      const detail = get().phoneList.find((list) => list.id === id);
+      return detail;
     }
   })
 

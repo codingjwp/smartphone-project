@@ -1,13 +1,13 @@
-import { usePhoneStore } from "../states/stores";
 import { useScrollPage } from "../hooks/useScrollPage";
+import { useFilterData } from '../hooks/useFilterData';
 
 type TableProps = {
   detailClick: (id: number, isOpen: boolean) => void;
 }
 
-const PhoneTable = ({detailClick}: TableProps) => {
-  const {filterData, pages} = usePhoneStore((state) => ({filterData: state.filterData, pages: state.pages}));
-  const {ref} = useScrollPage();
+const PhoneTable = ({ detailClick }: TableProps) => {
+  const { filterList, pages } = useFilterData();
+  const { ref } = useScrollPage();
 
   return (
     <>
@@ -25,28 +25,28 @@ const PhoneTable = ({detailClick}: TableProps) => {
           </tr>
         </thead>
         <tbody>
-          {filterData.length > 0
-            ? filterData.map((data) => {
+          {filterList.length > 0
+            ? filterList.map((data) => {
               return (
                 <tr key={data.id}>
                   <td className="px-1 border border-cyan-700"><span className="flex items-center justify-center min-h-[56px] max-h-full">{data.brands}</span></td>
                   <td className="px-1 border border-cyan-700">
                     <button className="w-full hover:underline" type="button"
                       onClick={() => detailClick(data.id, true)}>{data.model}</button>
-                    </td>
-                  <td className="px-1 border border-cyan-700 text-center">{data.os.replaceAll(' ',', ')}</td>
-                  <td className="hidden md:table-cell px-1 border border-cyan-700 text-center">{data.ram.replaceAll(' ',', ')}</td>
-                  <td className="hidden md:table-cell px-1 border border-cyan-700 text-center">{data.storage.replaceAll(' ',', ')}</td>
+                  </td>
+                  <td className="px-1 border border-cyan-700 text-center">{data.os.replaceAll(' ', ', ')}</td>
+                  <td className="hidden md:table-cell px-1 border border-cyan-700 text-center">{data.ram.replaceAll(' ', ', ')}</td>
+                  <td className="hidden md:table-cell px-1 border border-cyan-700 text-center">{data.storage.replaceAll(' ', ', ')}</td>
                   <td className="hidden md:table-cell px-1 border border-cyan-700 text-center">{data.battery}</td>
                   <td className="hidden lg:table-cell px-1 border border-cyan-700 text-center">{data.screen}</td>
                   <td className="hidden lg:table-cell px-1 border border-cyan-700 text-center">{data.width} X {data.height}</td>
                 </tr>
               )
-            }) 
+            })
             : null}
         </tbody>
       </table>
-      <div ref={ref} className={`w-full h-4 opacity-0 ${pages.page === pages.totalPage ? "hidden" : "block" }`}></div>
+      <div ref={ref} className={`w-full h-4 opacity-0 ${pages.page === pages.totalPage ? "hidden" : "block"}`}></div>
     </>
   )
 }

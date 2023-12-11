@@ -16,6 +16,7 @@ export type FilterGroups = {
     brand: string;
     storage: string;
     os: string;
+    text: string;
   }
 }
 
@@ -37,7 +38,8 @@ export const createFilterSlice: StateCreator<FilterGroups,
     filters: {
       brand: 'all',
       storage: 'all',
-      os: 'all'
+      os: 'all',
+      text: ''
     }
   })
 
