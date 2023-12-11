@@ -1,19 +1,24 @@
-import { useEffect } from "react";
-import { usePhoneStore, createPhones } from "./states/stores"
+import { useEffect } from "react"
 import Headers from "./components/Headers";
 import FilterMain from "./FilterMain";
-import { Toast } from "./components/Toast";
+import Toast from "./components/Toast";
+import { usePhoneStore, getPhoneFetch } from './states/stores';
 
 function App() {
-  const baseData = usePhoneStore((state) => state.baseData);
+  const { phoneList } = usePhoneStore(({ phoneList }) => ({ phoneList }));
+
   useEffect(() => {
-    if (baseData && Object.keys(baseData).length === 0) createPhones();
-  }, [baseData])
-  
+    if (phoneList.length > 0) return;
+    const controlFetch = new AbortController;
+    const signal = controlFetch.signal;
+    getPhoneFetch(1, signal);
+    return () => controlFetch.abort();
+  }, [])
+
   return (
     <div>
       <Toast />
-      <Headers title="Smart Phone Data List"/>
+      <Headers title="Smart Phone Data List" />
       <FilterMain />
     </div>
   )
