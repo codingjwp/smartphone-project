@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 
 const SearchHeader = () => {
   const categorys = usePhoneStore((state) => state.categorys);
-
+  
   return (
     <FilterGroup>
       <Selectors name="brand" title="브랜드" optionData={categorys} />

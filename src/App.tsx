@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div>
-      <Toast />
+      {/* <Toast /> */}
       <Headers title="Smart Phone Data List" />
       <FilterMain />
     </div>

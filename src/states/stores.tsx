@@ -35,21 +35,25 @@ const createFinshSlice: StateCreator<CategorysData & TotalPageData & FilterGroup
     setNextPage: () => {
       const isEndPage = get().pages.page + 1 > get().pages.totalPage;
       if (isEndPage) return;
-      set(({ pages }) => ({
-        pages: { ...pages, page: pages.page + 1 }
-      }))
+      set(({ pages }) => ({pages: { ...pages, page: pages.page + 1 }}))
+      getPhoneFetch(get().pages.page + 1);
     },
     setPhoneList: (data) => {
       set(({ phoneList }) => ({
-        phoneList: {
+        phoneList: [
           ...phoneList,
           ...data
-        }
+        ]
       }))
     },
-    setFilter: (keys, value) => set(({ filters }) => ({
-      filters: { ...filters, [keys]: value },
-    })),
+    setFilter: (keys, value) => set(({ filters }) => {
+      let updateFilter;
+      if (keys === 'text') 
+        updateFilter = {...filters, [keys]: value}
+      else 
+        updateFilter = {... filters, [keys]: value, text: ''}
+      return {filters: updateFilter}
+    }),
     setDetail: (id) => {
       const detail = get().phoneList.find((list) => list.id === id);
       return detail;
@@ -81,10 +85,15 @@ export const getPhoneFetch = (page: number = 1, signal?: AbortSignal) => {
   fetch('/db.json', { signal })
     .then((res) => res.json())
     .then((data: IPhoneObj) => {
-      console.log("getPhoen Fetch test");
-      const { brands, totalPage } = (data.category as OtherCategory);
+      console.log("getPhoen Fetch test", page);
       const newPhoneData = (data[`${page}`] as PhoenDetailData[])
-      usePhoneStore.getState().setCreateData(totalPage, brands, newPhoneData);
+      if (page === 1) {
+        const { brands, totalPage } = (data.category as OtherCategory);
+        usePhoneStore.getState().setCreateData(totalPage, brands, newPhoneData);
+      } 
+      else {
+        usePhoneStore.getState().setPhoneList(newPhoneData);
+      }
     })
     .catch((error: unknown) => {
       if ((error as DOMException).name === 'AbortError')

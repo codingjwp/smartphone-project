@@ -8,7 +8,6 @@ type TableProps = {
 const PhoneTable = ({ detailClick }: TableProps) => {
   const { filterList, pages } = useFilterData();
   const { ref } = useScrollPage();
-
   return (
     <>
       <table className="table-auto mt-5 w-full border-separate border-spacing-1 border-cyan-500">
