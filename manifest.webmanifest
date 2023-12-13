@@ -1,7 +1,7 @@
 {
   "name": "스마트폰 정보",
   "display": "standalone",
-  "start_url": "/smartphone-project",
+  "start_url": "/smartphone-project/",
   "description": "스마트폰 스펙에 대한 정보 및 3D 이미지 제공",
   "background_color": "#FFFFFF",
   "short_name": "SPD",
@@ -18,7 +18,7 @@
   "shortcuts": [
     {
       "name": "Smart Phone Data",
-      "url": "/smartphone-project",
+      "url": "/smartphone-project/",
       "icons": [
         {
           "src": "/smartphone-project/icons/iconX96.png",
