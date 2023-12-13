@@ -1,6 +1,6 @@
 const CACHE_NAME=['spd/v1'];
 const URLS_TO_CACHE = [
-    '/smartphone-project',
+    '/smartphone-project/',
     '/smartphone-project/db.json',
     '/smartphone-project/favicon.ico',
     '/smartphone-project/manifest.webmanifest',
