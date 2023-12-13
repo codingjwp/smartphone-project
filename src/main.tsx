@@ -5,9 +5,9 @@ import './global.css'
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register('/smartphone-project/service-worker.js')
-    .then((registration)=> {
+    .then((registration) => {
       if (registration.waiting) {
-        console.log("실행", registration);
+        console.info("실행", registration);
       }
     })
     .catch((err: unknown) => {

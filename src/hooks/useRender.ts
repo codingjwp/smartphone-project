@@ -32,7 +32,7 @@ export const useRender = (action: boolean, canvasRef: RefObject<HTMLCanvasElemen
     controls.update();
 
     const loader = new GLTFLoader();
-    loader.load(`/smartphone-project/assets/${imgUrl}`, (gltf) => {
+    loader.load(`/smartphone-project/threeD/${imgUrl}`, (gltf) => {
       scenc.add(gltf.scene)
       if (!animateRef.current) {
         const animate = () => {
