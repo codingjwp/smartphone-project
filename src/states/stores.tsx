@@ -84,7 +84,7 @@ export const usePhoneStore = create<CategorysData & TotalPageData & FilterGroups
 export const getPhoneFetch = (page: number = 1, signal?: AbortSignal) => {
   const length = usePhoneStore.getState().phoneList.length;
   if (page === 1 && length > 0) return;
-  fetch('/db.json', { signal })
+  fetch('/smartphone-project/db.json', { signal })
     .then((res) => res.json())
     .then((data: IPhoneObj) => {
       const newPhoneData = (data[`${page}`] as PhoenDetailData[])
