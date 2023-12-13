@@ -130,3 +130,10 @@ permissions:
 workflow를 구성하는 주요 단위입니다.
 
 workflow는 하나 이상의 `jobs`로 구성되며, 각 `job`은 workflow가 수행할 작업들을 나타냅니다
+
+
+## 에러
+
+```javascript
+Failed to load module script: Expected a JavaScript module script but the server responded with a MIME type of "text/html". Strict MIME type checking is enforced for module scripts per HTML spec.
+```
