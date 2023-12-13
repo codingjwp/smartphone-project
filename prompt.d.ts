@@ -7,9 +7,3 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 
 }
-
-// declare module beforeinstallprompt {
-//   interface WindowEventMap {
-//     beforeinstallprompt: BeforeInstallPromptEvent;
-//   }
-// }
