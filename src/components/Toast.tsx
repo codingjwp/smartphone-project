@@ -18,6 +18,7 @@ const Toast = () => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
       setIsOpen(true);
+      ;
       timeRef.current = setTimeout(() => { setIsOpen(false) }, 5000)
     }
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);

@@ -1,4 +1,4 @@
-import { useScrollPage } from "../hooks/useScrollPage";
+import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 import { useFilterData } from '../hooks/useFilterData';
 
 type TableProps = {
@@ -6,8 +6,11 @@ type TableProps = {
 }
 
 const PhoneTable = ({ detailClick }: TableProps) => {
-  const { filterList, pages } = useFilterData();
-  const { ref } = useScrollPage();
+  const { filterList, pages, setNextPage } = useFilterData();
+  const lastRowRef = useIntersectionObserver<HTMLDivElement>(() => {
+    if (pages.page !== pages.totalPage)
+      setNextPage();
+  }, []);
   return (
     <>
       <table className="table-auto mt-5 w-full border-separate border-spacing-1 border-cyan-500">
@@ -45,7 +48,7 @@ const PhoneTable = ({ detailClick }: TableProps) => {
             : null}
         </tbody>
       </table>
-      <div ref={ref} className={`w-full h-4 opacity-0 ${pages.page === pages.totalPage ? "hidden" : "block"}`}></div>
+      <div ref={pages.page !== pages.totalPage ? lastRowRef : null}></div>
     </>
   )
 }

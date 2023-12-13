@@ -2,13 +2,10 @@ import { useEffect } from "react"
 import Headers from "./components/Headers";
 import FilterMain from "./FilterMain";
 import Toast from "./components/Toast";
-import { usePhoneStore, getPhoneFetch } from './states/stores';
+import { getPhoneFetch } from './states/stores';
 
 function App() {
-  const { phoneList } = usePhoneStore(({ phoneList }) => ({ phoneList }));
-
   useEffect(() => {
-    if (phoneList.length > 0) return;
     const controlFetch = new AbortController;
     const signal = controlFetch.signal;
     getPhoneFetch(1, signal);
@@ -17,7 +14,7 @@ function App() {
 
   return (
     <div>
-      {/* <Toast /> */}
+      <Toast />
       <Headers title="Smart Phone Data List" />
       <FilterMain />
     </div>

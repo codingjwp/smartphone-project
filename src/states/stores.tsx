@@ -35,7 +35,7 @@ const createFinshSlice: StateCreator<CategorysData & TotalPageData & FilterGroup
     setNextPage: () => {
       const isEndPage = get().pages.page + 1 > get().pages.totalPage;
       if (isEndPage) return;
-      set(({ pages }) => ({pages: { ...pages, page: pages.page + 1 }}))
+      set(({ pages }) => ({ pages: { ...pages, page: pages.page + 1 } }))
       getPhoneFetch(get().pages.page + 1);
     },
     setPhoneList: (data) => {
@@ -48,11 +48,11 @@ const createFinshSlice: StateCreator<CategorysData & TotalPageData & FilterGroup
     },
     setFilter: (keys, value) => set(({ filters }) => {
       let updateFilter;
-      if (keys === 'text') 
-        updateFilter = {...filters, [keys]: value}
-      else 
-        updateFilter = {... filters, [keys]: value, text: ''}
-      return {filters: updateFilter}
+      if (keys === 'text')
+        updateFilter = { ...filters, [keys]: value }
+      else
+        updateFilter = { ...filters, [keys]: value, text: '' }
+      return { filters: updateFilter }
     }),
     setDetail: (id) => {
       const detail = get().phoneList.find((list) => list.id === id);
@@ -82,15 +82,16 @@ export const usePhoneStore = create<CategorysData & TotalPageData & FilterGroups
 )
 
 export const getPhoneFetch = (page: number = 1, signal?: AbortSignal) => {
+  const length = usePhoneStore.getState().phoneList.length;
+  if (page === 1 && length > 0) return;
   fetch('/db.json', { signal })
     .then((res) => res.json())
     .then((data: IPhoneObj) => {
-      console.log("getPhoen Fetch test", page);
       const newPhoneData = (data[`${page}`] as PhoenDetailData[])
       if (page === 1) {
         const { brands, totalPage } = (data.category as OtherCategory);
         usePhoneStore.getState().setCreateData(totalPage, brands, newPhoneData);
-      } 
+      }
       else {
         usePhoneStore.getState().setPhoneList(newPhoneData);
       }
@@ -100,62 +101,3 @@ export const getPhoneFetch = (page: number = 1, signal?: AbortSignal) => {
         console.error('Abort Error: get Phone Fetch')
     })
 }
-
-
-// const createPhoneSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IPhoneSlice> = (_, get) => ({
-//   category: [],
-//   baseData: {},
-//   phoneList: [],
-//   filterData: [],
-//   setDetail: (id) => {
-//     const filter = get().filterData.find((item) => item.id === id);
-//     return filter;
-//   }
-// })
-
-// const createPageSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IPageSlice> = (set, get) => ({
-//   pages: { page: 1, totalPage: 1 },
-//   setNextPage: () => {
-//     const prev = get().pages.page;
-//     const next = (prev + 1) > get().pages.totalPage ? prev : prev + 1;
-//     const nextData = !(prev === next && prev === get().pages.totalPage) ? get().baseData[`${next}`] as PhoneData[] : [];
-//     set(({pages}) => ({ pages: { ...pages, page: next } }))
-//     if (nextData.length > 0) {
-//       set(({phoneList}) => ({ phoneList: [...phoneList, ...nextData]}))
-//       get().setFilter('text', '');
-//     }
-//   }
-// })
-
-
-// const createFilterSlice: StateCreator<IPageSlice & IFilterSlice & IPhoneSlice, [], [], IFilterSlice> = (set, get) => ({
-//   filter: { brand: 'all', storage: 'all', os: 'all' },
-//   setFilter: (keys, value) => set(({ filter }) => ({
-//     filter: keys === 'text' ? filter : { ...filter, [keys]: value },
-//     filterData: get().phoneList.filter((phone) => {
-//       const brands = keys === 'brand'
-//         ? (value === 'all' ? true : phone.brands.includes(value))
-//         : (filter.brand === 'all' || phone.brands.includes(filter.brand));
-//       const storage = keys === 'storage'
-//         ? (value === 'all' ? true : phone.storage.includes(value))
-//         : (filter.storage === 'all' || phone.storage.includes(filter.storage));
-//       const os = keys === 'os'
-//         ? (value === 'all' ? true : phone.os.includes(value))
-//         : (filter.os === 'all' || phone.os.includes(filter.os));
-//       const text = keys === 'text' ? phone.model.toLowerCase().includes(value) : true;
-//       return brands && storage && os && text;
-//     })
-//   }))
-// })
-
-// export const createPhones = () => {
-//   fetch('/db.json')
-//     .then((res) => res.json())
-//     .then((data: PhoneObject) => {
-//       usePhoneStore.setState(({ pages }) => ({
-//         category: (data.category as CategoryData).brands,
-//         pages: { ...pages, totalPage: (data.category as CategoryData).totalPage },
-//         phoneList: (data[`${pages.page}`] as PhoneData[])
-//       }));
-//     });
-// }

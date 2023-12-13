@@ -1,7 +1,11 @@
 import { usePhoneStore } from '../states/stores'
 
 export const useFilterData = () => {
-  const { phoneList, filters, pages } = usePhoneStore(({ phoneList, filters, pages }) => ({ phoneList, filters, pages }));
+  const { phoneList, filters, pages, setNextPage }
+    = usePhoneStore(
+      ({ phoneList, filters, pages, setNextPage }) =>
+        ({ phoneList, filters, pages, setNextPage })
+    );
   const hasBrands = filters.brand;
   const hasStorage = filters.storage;
   const hasOs = filters.os;
@@ -14,5 +18,5 @@ export const useFilterData = () => {
     return checkBrand && checkStorage && checkOs && checkText
   })
 
-  return { filterList, pages };
+  return { filterList, pages, setNextPage };
 }

@@ -21,12 +21,12 @@ export type FilterGroups = {
 }
 
 export const createCategorySlice: StateCreator<CategorysData,
-  [], [], CategorysData> = (_) => ({
+  [], [], CategorysData> = () => ({
     categorys: []
   })
 
 export const createTotalPageSlice: StateCreator<TotalPageData,
-  [], [], TotalPageData> = (_) => ({
+  [], [], TotalPageData> = () => ({
     pages: {
       page: 1,
       totalPage: 1
@@ -34,7 +34,7 @@ export const createTotalPageSlice: StateCreator<TotalPageData,
   })
 
 export const createFilterSlice: StateCreator<FilterGroups,
-  [], [], FilterGroups> = (_) => ({
+  [], [], FilterGroups> = () => ({
     filters: {
       brand: 'all',
       storage: 'all',

@@ -19,6 +19,7 @@ export type PhoneData = {
 }
 
 export const createPhoneSlice: StateCreator<PhoneData,
-  [], [], PhoneData> = (_) => ({
-    phoneList: []
+  [], [], PhoneData> = () => ({
+    phoneList: [],
+    isLoading: false,
   })
