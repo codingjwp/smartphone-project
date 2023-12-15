@@ -1,33 +1,17 @@
 {
   "name": "스마트폰 정보",
-  "display": "standalone",
+  "short_name": "폰 정보",
   "start_url": "/smartphone-project/",
   "description": "스마트폰 스펙에 대한 정보 및 3D 이미지 제공",
-  "background_color": "#FFFFFF",
-  "short_name": "SPD",
-  "theme_color": "#FFFFFF",
+  "lang": "ko-KR",
+  "dir": "auto",
+  "theme_color": "#000000",
+  "background_color": "#000000",
   "categories": ["smartphone", "3d"],
-  "language": "ko-KR",
   "orientation": "portrait",
-  "prefer_related_applications": true,
-  "display_override": [
-    "window-controls-overlay",
-    "standalone",
-    "browser"
-  ],
-  "shortcuts": [
-    {
-      "name": "Smart Phone Data",
-      "url": "/smartphone-project/",
-      "icons": [
-        {
-          "src": "/smartphone-project/icons/iconX96.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
-    }
-  ],
+  "prefer_related_applications": false,
+  "display": "standalone",
+  "display_override": ["window-controls-overlay"],
   "icons": [
     {
       "src": "/smartphone-project/icons/iconX48.png",
@@ -63,7 +47,20 @@
       "src": "/smartphone-project/icons/iconX512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Smart Phone Data",
+      "url": "/smartphone-project/",
+      "icons": [
+        {
+          "src": "/smartphone-project/icons/iconX96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
