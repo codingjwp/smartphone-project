@@ -4,7 +4,7 @@ const URLS_TO_CACHE = [
   '/smartphone-project/',
   '/smartphone-project/db.json',
   '/smartphone-project/favicon.ico',
-  '/smartphone-project/manifest.webmanifest',
+  '/smartphone-project/manifest.json',
   '/smartphone-project/threeD/001.glb',
   '/smartphone-project/threeD/002.glb',
   '/smartphone-project/threeD/003.glb',
@@ -20,8 +20,6 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME[0]).then((cache) => {
       return cache.addAll(URLS_TO_CACHE);
-    }).catch((error) => {
-      if (error instanceof Error) throw new Error(error.message);
     })
   )
 });
