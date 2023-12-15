@@ -1,5 +1,5 @@
 import { usePhoneStore } from "../states/stores";
-import SearchSvg from "./SearchSvg";
+import { SearchSvg } from "./SvgComponents";
 import { KeyboardEvent, MouseEvent, useRef } from 'react';
 
 
