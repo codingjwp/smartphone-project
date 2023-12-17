@@ -21,7 +21,7 @@ const Toast = () => {
   return (
     <div className={`fixed w-[250px] h-24 ${isOpen ? "top-2" : "-top-28" } left-1/2 -translate-x-1/2 bg-cyan-900 rounded-xl z-20`}>
       <div className='flex flex-row h-full items-center justify-evenly'>
-        <img className='rounded-2xl' src='/icons/iconX48.png' alt='smartphone data' />
+        <img className='rounded-2xl' src='/smartphone-project/icons/iconX48.png' alt='스마트폰 정보' />
         <div className='flex flex-col justify-center gap-1 text-sm'>
           {deferredPrompt ? isPrompt : isNotPrompt} 
         </div>
